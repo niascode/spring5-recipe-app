@@ -30,7 +30,6 @@ public class Recipe {
     private Set<Ingredient> ingredients;
 
 
-
     @Lob
     private Byte[] image;
     @OneToOne(cascade = CascadeType.ALL)
