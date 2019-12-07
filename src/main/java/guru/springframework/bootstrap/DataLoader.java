@@ -4,16 +4,18 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
-import org.springframework.boot.CommandLineRunner;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
@@ -26,10 +28,12 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         System.out.println("Running bootstrap...");
         recipeRepository.saveAll(getRecipes());
         System.out.println("Bootstrap done...");
+        log.debug("BootStrap Loaded!");
     }
 
     private List<Recipe> getRecipes() {
