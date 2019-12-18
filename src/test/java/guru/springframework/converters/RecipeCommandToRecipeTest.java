@@ -42,8 +42,7 @@ public class RecipeCommandToRecipeTest {
         assertNull(converter.convert(null));
     }
 
-	//TODO:  Figure out why this fails.
-    //@Test
+    @Test
     public void testEmptyObject() throws Exception {
         assertNotNull(converter.convert(new RecipeCommand()));
     }
