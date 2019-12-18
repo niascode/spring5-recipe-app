@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UnitOfMeasureRepositoryTestIT {
+public class UnitOfMeasureRepositoryIT {
 
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
@@ -26,5 +26,10 @@ public class UnitOfMeasureRepositoryTestIT {
     public void findByDescription() {
         Optional<UnitOfMeasure> unitOfMeasureOption = unitOfMeasureRepository.findByDescription("Teaspoon");
         assertEquals("Teaspoon",unitOfMeasureOption.get().getDescription());
+    }
+    @Test
+    public void findByDescriptionCup() throws Exception {
+        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Cup");
+        assertEquals("Cup", uomOptional.get().getDescription());
     }
 }
