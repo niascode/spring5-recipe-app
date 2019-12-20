@@ -21,7 +21,6 @@
             <div class="panel-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                         <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
                     </div>
                     <div class="panel-body">
@@ -33,7 +32,6 @@
                                 <ul>
                                     <li th:remove="all">cat one</li>
                                     <li th:remove="all">cat two</li>
-                                    <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                                     <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat three</li>
                                 </ul>
                             </div>
@@ -42,7 +40,6 @@
                             <div class="col-md-3">
                                 <h5>Prep Time:</h5>
                             </div>
-                            <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                             <div class="col-md-3">
                                 <p th:text="${(recipe.prepTime) + ' Min'}">30 min</p>
                             </div>
@@ -94,10 +91,9 @@
                                     <li th:remove="all">1 Cup of milk</li>
                                     <li th:remove="all">1 Teaspoon of chocolate</li>
                                     <li th:each="ingredient : ${recipe.ingredients}"
-                                        th:text="(${ingredient.getAmount()
-                                        + ' '
-                                        + ingredient.uom.getDescription()
-                                        + ' - ' + ingredient.getDescription()})">1 Teaspoon of Sugar</li>
+                                        th:text="${(ingredient.getAmount() +
+                                        ' ' + ingredient.uom.getDescription() +
+                                        ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar</li>
                                 </ul>
                             </div>
                         </div>
