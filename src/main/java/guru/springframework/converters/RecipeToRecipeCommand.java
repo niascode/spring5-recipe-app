@@ -8,9 +8,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by jt on 6/21/17.
- */
+
 @Component
 public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
 
@@ -18,9 +16,9 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
     private final IngredientToIngredientCommand ingredientConverter;
     private final NotesToNotesCommand notesConverter;
 
-    public RecipeToRecipeCommand(CategoryToCategoryCommand categoryConveter, IngredientToIngredientCommand ingredientConverter,
+    public RecipeToRecipeCommand(CategoryToCategoryCommand categoryConverter, IngredientToIngredientCommand ingredientConverter,
                                  NotesToNotesCommand notesConverter) {
-        this.categoryConveter = categoryConveter;
+        this.categoryConveter = categoryConverter;
         this.ingredientConverter = ingredientConverter;
         this.notesConverter = notesConverter;
     }
@@ -43,7 +41,10 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
         command.setServings(source.getServings());
         command.setSource(source.getSource());
         command.setUrl(source.getUrl());
-        command.setNotes(notesConverter.convert(source.getNotes()));
+        command.setImage(source.getImage());
+        if (source.getNotes()!=null) {
+            command.setNotes(notesConverter.convert(source.getNotes()));
+        }
 
         if (source.getCategories() != null && source.getCategories().size() > 0){
             source.getCategories()
