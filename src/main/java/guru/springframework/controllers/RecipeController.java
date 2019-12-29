@@ -7,14 +7,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 
 @Slf4j
 @Controller
 public class RecipeController {
 
+    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
     private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
@@ -40,11 +44,20 @@ public class RecipeController {
     public String updateRecipe(@PathVariable String id, Model model){
         log.debug("Recipe update controller executed.");
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
-        return  "recipe/recipeform";
+        return  RECIPE_RECIPEFORM_URL;
     }
 
+    //@Valid annotation validates the command is valid first.
+    //BindingResult is the result of the validation.
+    //ModelAttribute binds the recipe command to the model.
     @PostMapping("recipe")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand command){
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.debug((objectError.toString()));
+            });
+            return RECIPE_RECIPEFORM_URL;
+        }
         log.debug("Recipe controller executed.");
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
 
