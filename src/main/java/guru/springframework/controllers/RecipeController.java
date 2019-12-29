@@ -49,7 +49,9 @@ public class RecipeController {
 
     //@Valid annotation validates the command is valid first.
     //BindingResult is the result of the validation.
-    //ModelAttribute binds the recipe command to the model.
+    //@ModelAttribute binds the recipe command to the model.
+    //@ModelAttribute Annotation that binds a method parameter or method return value to a named model attribute,
+    // exposed to a web view. Supported for controller classes with @RequestMapping methods.
     @PostMapping("recipe")
     public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
